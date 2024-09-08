@@ -1,4 +1,4 @@
-module djangopher
+module github.com/dowling-john/DjanGopher
 
 go 1.21
 
