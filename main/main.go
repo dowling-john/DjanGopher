@@ -1,29 +1,45 @@
-//package main
-//
-//import (
-//	"djangopher/core"
-//	"djangopher/main/routes"
-//)
-//
-//func main() {
-//	app := core.DjanGopher{
-//		Router: routes.InitRouter(),
-//	}
-//	app.RunServer()
-//}
-
 package main
 
 import (
+	"embed"
 	"flag"
-	"fmt"
+	"io/fs"
+	"os"
+	"text/template"
 )
 
-func main() {
-	textPtr := flag.String("text", "", "Text to parse.")
-	metricPtr := flag.String("metric", "chars", "Metric {chars|words|lines};.")
-	uniquePtr := flag.Bool("unique", false, "Measure unique values of a metric.")
-	flag.Parse()
+//go:embed project_template/*
+var projectFiles embed.FS
 
-	fmt.Printf("textPtr: %s, metricPtr: %s, uniquePtr: %t\n", *textPtr, *metricPtr, *uniquePtr)
+var newFolderStructure = []string{
+	"%v/handlers", "%v/models", "%v/routes", "%v/main",
+}
+
+func createNewProjectStructure(s string) {
+	tmplFiles, _ := fs.ReadDir(projectFiles, s)
+
+	for _, tmpl := range tmplFiles {
+		if tmpl.IsDir() {
+			continue
+		}
+
+		pt, _ := template.ParseFS(projectFiles, s+"/"+tmpl.Name())
+
+		file, _ := os.Create(s + "/" + tmpl.Name())
+		defer file.Close()
+
+		// apply the template to the vars map and write the result to file.
+		_ = pt.Execute(file, nil)
+	}
+
+}
+
+func CreateApp(s string) error {
+	createNewProjectStructure(s)
+	return nil
+}
+
+func main() {
+	flag.Func("create-app", "DjanGopher Manage", CreateApp)
+	flag.Parse()
 }
