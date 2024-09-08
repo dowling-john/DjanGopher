@@ -1,7 +1,7 @@
 package routing
 
 import (
-	"djangopher/http"
+	"github.com/dowling-john/DjanGopher/http"
 	http2 "net/http"
 )
 

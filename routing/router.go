@@ -2,7 +2,7 @@ package routing
 
 import (
 	"database/sql"
-	"djangopher/handlers"
+	"github.com/dowling-john/DjanGopher/handlers"
 	"net/http"
 )
 

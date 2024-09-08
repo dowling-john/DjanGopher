@@ -2,9 +2,9 @@ package core
 
 import (
 	"database/sql"
-	"djangopher/config"
-	"djangopher/database"
-	"djangopher/routing"
+	"github.com/dowling-john/DjanGopher/config"
+	"github.com/dowling-john/DjanGopher/database"
+	"github.com/dowling-john/DjanGopher/routing"
 	"log"
 	"net/http"
 )

@@ -2,8 +2,8 @@ package database
 
 import (
 	"database/sql"
-	"djangopher/config"
-	"djangopher/errors"
+	"github.com/dowling-john/DjanGopher/config"
+	"github.com/dowling-john/DjanGopher/errors"
 )
 
 func InitDatabase(databaseConfiguration config.DatabaseConfig) *sql.DB {

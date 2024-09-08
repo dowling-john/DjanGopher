@@ -2,7 +2,7 @@ package http
 
 import (
 	"database/sql"
-	"djangopher/config"
+	"github.com/dowling-john/DjanGopher/config"
 	"net/http"
 )
 

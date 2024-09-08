@@ -1,8 +1,8 @@
 package config
 
 import (
-	"djangopher/errors"
 	"fmt"
+	"github.com/dowling-john/DjanGopher/errors"
 	"gopkg.in/yaml.v2"
 	"os"
 )
