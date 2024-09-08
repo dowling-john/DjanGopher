@@ -1,6 +1,10 @@
 DjanGopher
 ==========
 
+[![Go](https://github.com/dowling-john/DjanGopher/actions/workflows/unit-testing.yaml/badge.svg)](https://github.com/dowling-john/DjanGopher/actions/workflows/unit-testing.yaml)
+
+
+
 Looking to be a Go alternative to the Django Frame work.
 
 Initial MVP Objectives
