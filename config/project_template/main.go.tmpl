@@ -1,0 +1,13 @@
+package main
+
+import (
+	"djangopher/core"
+	"djangopher/main/routes"
+)
+
+func main() {
+	app := core.DjanGopher{
+		Router: routes.InitRouter(),
+	}
+	app.RunServer()
+}

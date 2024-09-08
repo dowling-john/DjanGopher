@@ -1,0 +1,17 @@
+package routes
+
+import (
+	"djangopher/main/handlers"
+	"djangopher/routing"
+)
+
+// InitRouter
+// This function sets up the routing functionality of the app it takes the request coming in and routes this to the
+// relevant handler defined in your route
+func InitRouter() *routing.Router {
+	return &routing.Router{
+		Routes: []*routing.Route{
+			{Path: "/", Handler: &handlers.Whoo{}},
+		},
+	}
+}
