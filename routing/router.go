@@ -27,12 +27,9 @@ type (
 // Main routing function, this function handles all the incoming http requests and distributes them to the relevant
 // handlers
 func (router *Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	selectedRoute, err := router.selectRoute()
-	if err != nil {
-		return
-	}
+	selectedRoute := router.selectRoute()
 
-	err = router.runHttpMethodOfSelectedRoute(router.buildRequest(r), selectedRoute).Write(w)
+	err := router.runHttpMethodOfSelectedRoute(router.buildRequest(r), selectedRoute).Write(w)
 	if err != nil {
 		return
 	}
