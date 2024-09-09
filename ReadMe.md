@@ -16,6 +16,7 @@ Philosophy of the project
         - Code readabillity over fancy functionality
 
 Initial MVP Objectives
+-----
 
     - Build Models 
     - Accept http requests 
@@ -26,6 +27,6 @@ Initial MVP Objectives
 Tools
 
     - Migrations tooling the same as Django <- Go install 
-    - Creating Projects <- Go install 
+    - Creating Projects 
 
     
