@@ -3,9 +3,17 @@ DjanGopher
 
 [![Go](https://github.com/dowling-john/DjanGopher/actions/workflows/unit-testing.yaml/badge.svg)](https://github.com/dowling-john/DjanGopher/actions/workflows/unit-testing.yaml)
 
+*This Project is still experimental*
 
+Go alternative to the Django framework.
 
-Looking to be a Go alternative to the Django Frame work.
+Philosophy of the project 
+-----
+    - Minimal use of external librarys
+        - External libraries bring increased security risks, minimising this risk is one of the top priorities.
+
+    - Ease of Use
+        - Code readabillity over fancy functionality
 
 Initial MVP Objectives
 
