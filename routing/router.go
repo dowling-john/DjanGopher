@@ -11,9 +11,11 @@ type (
 	// Router
 	// The Router
 	Router struct {
-		DatabaseConnection *sql.DB
-		Logger             *log.Logger
-		Routes             []*Route
+		DatabaseConnection         *sql.DB
+		Logger                     *log.Logger
+		Routes                     []*Route
+		InternalServerErrorHandler *handlers.Handler
+		NotFoundHandler            *handlers.Handler
 	}
 
 	// Route
@@ -29,10 +31,8 @@ type (
 // Main routing function, this function handles all the incoming http requests and distributes them to the relevant
 // handlers
 func (router *Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	selectedRoute := router.selectRoute()
-
-	err := router.runHttpMethodOfSelectedRoute(router.buildRequest(r), selectedRoute).Write(w)
+	err := router.runHttpMethodOfSelectedHandler(router.buildRequest(r), router.selectHandler()).Write(w)
 	if err != nil {
-		return
+
 	}
 }
