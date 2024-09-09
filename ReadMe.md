@@ -9,7 +9,7 @@ Go alternative to the Django framework.
 
 Philosophy of the project 
 -----
-    - Minimal use of external librarys
+    - Minimal use of external libraries
         - External libraries bring increased security risks, minimising this risk is one of the top priorities.
 
     - Ease of Use
