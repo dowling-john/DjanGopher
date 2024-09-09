@@ -7,7 +7,7 @@ import (
 )
 
 func (router *Router) selectHandler() (selectedHandler handlers.Handler) {
-	return *router.InternalServerErrorHandler
+	return router.InternalServerErrorHandler
 }
 
 func (router *Router) runHttpMethodOfSelectedHandler(request *http.Request, selectedHandler handlers.Handler) (response *http2.Response) {
