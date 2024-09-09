@@ -9,7 +9,6 @@ Looking to be a Go alternative to the Django Frame work.
 
 Initial MVP Objectives
 
-    - Run an application 
     - Build Models 
     - Accept http requests 
     - Build http responses
