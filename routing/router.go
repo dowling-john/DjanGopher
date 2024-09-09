@@ -14,8 +14,8 @@ type (
 		DatabaseConnection         *sql.DB
 		Logger                     *log.Logger
 		Routes                     []*Route
-		InternalServerErrorHandler *handlers.Handler
-		NotFoundHandler            *handlers.Handler
+		InternalServerErrorHandler handlers.Handler
+		NotFoundHandler            handlers.Handler
 	}
 
 	// Route
