@@ -23,7 +23,7 @@ func (n *InternalServerError) Delete(request *http.Request) (httpResponse *http2
 
 func (n *InternalServerError) Get(request *http.Request) (httpResponse *http2.Response) {
 	return &http2.Response{
-		StatusCode: http2.StatusInternalServerError,
+		StatusCode: http2.StatusTeapot,
 	}
 }
 
