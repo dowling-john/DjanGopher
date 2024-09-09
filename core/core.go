@@ -2,7 +2,9 @@ package core
 
 import (
 	"database/sql"
+	"fmt"
 	"github.com/dowling-john/DjanGopher/config"
+	"github.com/dowling-john/DjanGopher/logging"
 	"github.com/dowling-john/DjanGopher/routing"
 	"log"
 	"net/http"
@@ -11,6 +13,7 @@ import (
 type DjanGopher struct {
 	Configuration      *config.Configuration
 	DatabaseConnection *sql.DB
+	Logger             *log.Logger
 	Router             *routing.Router
 }
 
@@ -27,11 +30,14 @@ type DjanGopher struct {
 func (d *DjanGopher) RunServer() {
 
 	d.Configuration = config.InitConfiguration()
+	d.Logger = logging.Init(d.Configuration.LoggingConfiguration)
+	d.Router.Logger = d.Logger
+
 	// ToDo: Add back once the routing is operational
 	//d.DatabaseConnection = database.InitDatabase(d.Configuration.DatabaseConfiguration)
 	//d.Router.DatabaseConnection = d.DatabaseConnection
 
-	log.Fatal(
-		http.ListenAndServe(":8080", d.Router),
+	d.Logger.Fatal(
+		http.ListenAndServe(fmt.Sprintf(":%v", d.Configuration.ServerConfiguration.Port), d.Router),
 	)
 }

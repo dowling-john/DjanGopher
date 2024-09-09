@@ -3,6 +3,7 @@ package routing
 import (
 	"database/sql"
 	"github.com/dowling-john/DjanGopher/handlers"
+	"log"
 	"net/http"
 )
 
@@ -11,6 +12,7 @@ type (
 	// The Router
 	Router struct {
 		DatabaseConnection *sql.DB
+		Logger             *log.Logger
 		Routes             []*Route
 	}
 
