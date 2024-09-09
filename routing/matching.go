@@ -5,8 +5,8 @@ import (
 	http2 "net/http"
 )
 
-func (router *Router) selectRoute() (selectedRoute *Route, err error) {
-	return
+func (router *Router) selectRoute() (selectedRoute *Route) {
+	return &InternalServerErrorRoute
 }
 
 func (router *Router) runHttpMethodOfSelectedRoute(request *http.Request, selectedRoute *Route) (response *http2.Response) {
