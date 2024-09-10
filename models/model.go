@@ -30,7 +30,7 @@ type (
 
 func (m *Model) ParseSqlRow(row *sql.Rows) (err error) {
 	t := reflect.TypeOf(m)
-	for i := 0; i < t.Len(); i++ {
+	for i := 0; i < t.NumField(); i++ {
 		field := t.Field(i)
 		jsonValue := field.Tag.Get("model")
 		fmt.Println(jsonValue)
