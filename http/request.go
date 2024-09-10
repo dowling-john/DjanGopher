@@ -1,8 +1,8 @@
 package http
 
 import (
-	"database/sql"
 	"github.com/dowling-john/DjanGopher/config"
+	"github.com/dowling-john/DjanGopher/database"
 	"log"
 	"net/http"
 )
@@ -12,7 +12,7 @@ import (
 // to use
 type Request struct {
 	Configuration      *config.Configuration
-	DataBaseConnection *sql.DB
+	DataBaseConnection *database.Database
 	Logger             *log.Logger
 	BaseHttpRequest    *http.Request
 }
