@@ -13,7 +13,6 @@ type Database struct {
 func InitDatabase(databaseConfiguration config.DatabaseConfig) *Database {
 	databaseConnection, err := sql.Open(databaseConfiguration.DriverName, "./foo.db")
 	errors.LogAnyErrorAndExit(err)
-	defer databaseConnection.Close()
 	return &Database{
 		DataBaseConnection: databaseConnection,
 	}
