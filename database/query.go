@@ -8,7 +8,6 @@ import (
 )
 
 func (d *Database) RawQuery(query string, model interface{}) (err error) {
-
 	t := reflect.TypeOf(model)
 	fmt.Println(t.NumField())
 	for i := 0; i < t.NumField(); i++ {
@@ -18,6 +17,7 @@ func (d *Database) RawQuery(query string, model interface{}) (err error) {
 	}
 
 	row, err := d.DataBaseConnection.Query(query)
+	fmt.Println(row)
 	if err != nil {
 		return err
 	}
