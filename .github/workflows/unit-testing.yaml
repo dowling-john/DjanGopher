@@ -1,4 +1,4 @@
-name: Go
+name: DjanGopher Unit Testing
 
 on: [pull_request]
 
