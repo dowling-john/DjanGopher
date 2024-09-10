@@ -4,8 +4,16 @@ DjanGopher
 [![Go](https://github.com/dowling-john/DjanGopher/actions/workflows/unit-testing.yaml/badge.svg)](https://github.com/dowling-john/DjanGopher/actions/workflows/unit-testing.yaml)
 
 *This Project is still experimental*
+-------
 
-Go alternative to the Django framework.
+The DjanGopher project is an alternative to the Django framework for Go developers. I decided to create the project to
+expand the wonderful work that the Django developers have done over the years and bring some of the built-in benefits of the 
+Go programming language.
+
+These built-in features like static typing and concurrency can help us when building better and more robust web applications.
+
+I would love help in building this software so if you have time and willing please get in contact.
+
 
 Philosophy of the project 
 -----
