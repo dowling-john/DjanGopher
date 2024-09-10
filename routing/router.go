@@ -4,35 +4,25 @@ import (
 	"database/sql"
 	"github.com/dowling-john/DjanGopher/handlers"
 	"log"
-	"net/http"
 )
 
 type (
 	// Router
 	// The Router
 	Router struct {
-		DatabaseConnection *sql.DB
-		Logger             *log.Logger
-		Routes             []*Route
+		DatabaseConnection         *sql.DB
+		Logger                     *log.Logger
+		Routes                     []*Route
+		InternalServerErrorHandler handlers.Handler
+		NotFoundHandler            handlers.Handler
 	}
 
 	// Route
-	// The Route holds the http path and a handler that meets the handlers.Handler interface, the routes are added to
-	// router object and are used to match the incoming request and direct them to the relevant handler type
+	// The Route holds the http path and a handler that meets the handlers.Handler interface.
+	// The Path variable should be a Regex string that is used to match the path of the incoming request, the selection will
+	// return the first match in the routes list, and will return the NotFoundHandler in cases where no route is found.
 	Route struct {
 		Path    string
 		Handler handlers.Handler
 	}
 )
-
-// ServeHTTP
-// Main routing function, this function handles all the incoming http requests and distributes them to the relevant
-// handlers
-func (router *Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	selectedRoute := router.selectRoute()
-
-	err := router.runHttpMethodOfSelectedRoute(router.buildRequest(r), selectedRoute).Write(w)
-	if err != nil {
-		return
-	}
-}

@@ -15,9 +15,10 @@ Philosophy of the project
     - Ease of Use
         - Code readabillity over fancy functionality
 
+
 Initial MVP Objectives
 -----
-
+    - Async Handlers using go-routines
     - Build Models 
     - Accept http requests 
     - Build http responses

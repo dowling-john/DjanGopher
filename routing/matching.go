@@ -1,27 +1,34 @@
 package routing
 
 import (
+	"github.com/dowling-john/DjanGopher/handlers"
 	"github.com/dowling-john/DjanGopher/http"
 	http2 "net/http"
+	"regexp"
 )
 
-func (router *Router) selectRoute() (selectedRoute *Route) {
-	return &InternalServerErrorRoute
+func (router *Router) selectHandler(request *http.Request) (selectedHandler handlers.Handler) {
+	for _, route := range router.Routes {
+		if regexp.MustCompile(route.Path).MatchString(request.BaseHttpRequest.URL.Path) {
+			return route.Handler
+		}
+	}
+	return router.NotFoundHandler
 }
 
-func (router *Router) runHttpMethodOfSelectedRoute(request *http.Request, selectedRoute *Route) (response *http2.Response) {
+func (router *Router) runHttpMethodOfSelectedHandler(request *http.Request, selectedHandler handlers.Handler) (response *http2.Response) {
 	switch request.BaseHttpRequest.Method {
 	case http2.MethodGet:
-		return selectedRoute.Handler.Get(request)
+		return selectedHandler.Get(request)
 	case http2.MethodPost:
-		return selectedRoute.Handler.Post(request)
+		return selectedHandler.Post(request)
 	case http2.MethodPut:
-		return selectedRoute.Handler.Put(request)
+		return selectedHandler.Put(request)
 	case http2.MethodPatch:
-		return selectedRoute.Handler.Patch(request)
+		return selectedHandler.Patch(request)
 	case http2.MethodDelete:
-		return selectedRoute.Handler.Delete(request)
+		return selectedHandler.Delete(request)
 	default:
-		return selectedRoute.Handler.Get(request)
+		return selectedHandler.Get(request)
 	}
 }
