@@ -2,6 +2,7 @@ DjanGopher
 ==========
 
 [![Go](https://github.com/dowling-john/DjanGopher/actions/workflows/unit-testing.yaml/badge.svg)](https://github.com/dowling-john/DjanGopher/actions/workflows/unit-testing.yaml)
+[![DjanGopher Test Coverage](https://github.com/dowling-john/DjanGopher/actions/workflows/testing-coverage.yaml/badge.svg)](https://github.com/dowling-john/DjanGopher/actions/workflows/testing-coverage.yaml)
 
 *This Project is still experimental*
 -------
