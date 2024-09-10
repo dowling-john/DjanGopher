@@ -2,7 +2,6 @@ package database
 
 import (
 	"errors"
-	"fmt"
 )
 
 func (d *Database) RawQuery(query string, model interface{}) (err error) {
@@ -13,6 +12,5 @@ func (d *Database) RawQuery(query string, model interface{}) (err error) {
 	if row == nil {
 		return errors.New("no rows found")
 	}
-	fmt.Println(row.Columns())
 	return
 }

@@ -1,11 +1,16 @@
 package models
 
-import "database/sql"
+import (
+	"database/sql"
+	"fmt"
+	"reflect"
+)
 
 type (
 	ModelType interface {
 		Save() (err error)
-		Query() (models []ModelType, err error)
+		RawQuery(queryString string) (models []ModelType, err error)
+		ParseSqlRow(row *sql.Rows) (err error)
 	}
 
 	// Model
@@ -19,11 +24,27 @@ type (
 	Model struct {
 		Database  *sql.DB
 		TableName string
+		Row       *sql.Row
 	}
 )
+
+func (m *Model) ParseSqlRow(row *sql.Rows) (err error) {
+	t := reflect.TypeOf(m)
+	for i := 0; i < t.NumField(); i++ {
+		field := t.Field(i)
+		jsonValue := field.Tag.Get("model")
+		fmt.Println(jsonValue)
+	}
+	return
+}
 
 // Save Method
 // ToDo: The save method needs to use a generalized config file similar to the django effort
 func (m *Model) Save() (err error) {
+	return
+}
+
+// RawQuery
+func (m *Model) RawQuery(queryString string) (models []ModelType, err error) {
 	return
 }
