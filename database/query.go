@@ -1,6 +1,9 @@
 package database
 
+import "fmt"
+
 func (d *Database) RawQuery(query string, model interface{}) (err error) {
-	_, err = d.DataBaseConnection.Query(query)
+	row, err := d.DataBaseConnection.Query(query)
+	fmt.Println(row.Columns())
 	return
 }

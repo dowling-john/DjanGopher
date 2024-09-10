@@ -12,7 +12,7 @@ type Database struct {
 }
 
 func InitDatabase(databaseConfiguration config.DatabaseConfig) *Database {
-	databaseConnection, err := sql.Open(databaseConfiguration.DriverName, "./foo.db")
+	databaseConnection, err := sql.Open(databaseConfiguration.DriverName, databaseConfiguration.DatabaseName)
 	errors.LogAnyErrorAndExit(err)
 	fmt.Println(err)
 	return &Database{
