@@ -4,10 +4,16 @@ import (
 	"github.com/dowling-john/DjanGopher/handlers"
 	"github.com/dowling-john/DjanGopher/http"
 	http2 "net/http"
+	"regexp"
 )
 
-func (router *Router) selectHandler() (selectedHandler handlers.Handler) {
-	return router.InternalServerErrorHandler
+func (router *Router) selectHandler(request *http.Request) (selectedHandler handlers.Handler) {
+	for _, route := range router.Routes {
+		if regexp.MustCompile(route.Path).MatchString(request.BaseHttpRequest.URL.Path) {
+			return route.Handler
+		}
+	}
+	return router.NotFoundHandler
 }
 
 func (router *Router) runHttpMethodOfSelectedHandler(request *http.Request, selectedHandler handlers.Handler) (response *http2.Response) {

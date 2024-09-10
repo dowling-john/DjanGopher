@@ -19,8 +19,9 @@ type (
 	}
 
 	// Route
-	// The Route holds the http path and a handler that meets the handlers.Handler interface, the routes are added to
-	// router object and are used to match the incoming request and direct them to the relevant handler type
+	// The Route holds the http path and a handler that meets the handlers.Handler interface.
+	// The Path variable should be a Regex string that is used to match the path of the incoming request, the selection will
+	// return the first match in the routes list, and will return the NotFoundHandler in cases where no route is found.
 	Route struct {
 		Path    string
 		Handler handlers.Handler
@@ -31,8 +32,12 @@ type (
 // Main routing function, this function handles all the incoming http requests and distributes them to the relevant
 // handlers
 func (router *Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	err := router.runHttpMethodOfSelectedHandler(router.buildRequest(r), router.selectHandler()).Write(w)
+	request := router.buildRequest(r)
+	err := router.runHttpMethodOfSelectedHandler(request, router.selectHandler(request)).Write(w)
 	if err != nil {
-
+		err := router.InternalServerErrorHandler.Get(request).Write(w)
+		if err != nil {
+			router.Logger.Fatalf("Error writing response: %v", err)
+		}
 	}
 }
