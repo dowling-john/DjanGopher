@@ -6,8 +6,15 @@ import (
 	"github.com/dowling-john/DjanGopher/errors"
 )
 
-func InitDatabase(databaseConfiguration config.DatabaseConfig) *sql.DB {
-	databaseConnection, err := sql.Open("", databaseConfiguration.FormatDsn())
+type Database struct {
+	DataBaseConnection *sql.DB
+}
+
+func InitDatabase(databaseConfiguration config.DatabaseConfig) *Database {
+	databaseConnection, err := sql.Open(databaseConfiguration.DriverName, "./foo.db")
 	errors.LogAnyErrorAndExit(err)
-	return databaseConnection
+	defer databaseConnection.Close()
+	return &Database{
+		DataBaseConnection: databaseConnection,
+	}
 }
