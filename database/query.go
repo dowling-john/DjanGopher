@@ -1,10 +1,22 @@
 package database
 
 import (
+	"database/sql"
 	"errors"
+	"fmt"
+	"reflect"
 )
 
 func (d *Database) RawQuery(query string, model interface{}) (err error) {
+
+	t := reflect.TypeOf(model)
+	fmt.Println(t.NumField())
+	for i := 0; i < t.NumField(); i++ {
+		field := t.Field(i)
+		jsonValue := field.Tag.Get("model")
+		fmt.Println(jsonValue)
+	}
+
 	row, err := d.DataBaseConnection.Query(query)
 	if err != nil {
 		return err
@@ -12,5 +24,10 @@ func (d *Database) RawQuery(query string, model interface{}) (err error) {
 	if row == nil {
 		return errors.New("no rows found")
 	}
+	return
+}
+
+func ParseSqlRow(row *sql.Rows) (err error) {
+
 	return
 }

@@ -2,8 +2,6 @@ package models
 
 import (
 	"database/sql"
-	"fmt"
-	"reflect"
 )
 
 type (
@@ -28,24 +26,8 @@ type (
 	}
 )
 
-func (m *Model) ParseSqlRow(row *sql.Rows) (err error) {
-	t := reflect.TypeOf(*m)
-	fmt.Println(t.NumField())
-	for i := 0; i < t.NumField(); i++ {
-		field := t.Field(i)
-		jsonValue := field.Tag.Get("model")
-		fmt.Println(jsonValue)
-	}
-	return
-}
-
 // Save Method
 // ToDo: The save method needs to use a generalized config file similar to the django effort
 func (m *Model) Save() (err error) {
-	return
-}
-
-// RawQuery
-func (m *Model) RawQuery(queryString string) (models []ModelType, err error) {
 	return
 }
