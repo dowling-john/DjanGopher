@@ -6,6 +6,8 @@ import (
 	"github.com/dowling-john/DjanGopher/errors"
 )
 
+// Database
+// Todo: need to add the logger to the database
 type Database struct {
 	DataBaseConnection *sql.DB
 }
