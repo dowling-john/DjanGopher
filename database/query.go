@@ -4,19 +4,11 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	"reflect"
 )
 
 func (d *Database) RawQuery(query string, model interface{}) (err error) {
-	t := reflect.TypeOf(model)
-	for i := 0; i < t.NumField(); i++ {
-		field := t.Field(i)
-		jsonValue := field.Tag.Get("model")
-		fmt.Println(jsonValue)
-	}
-
-	row, err := d.DataBaseConnection.Query(query)
-	fmt.Println(row.Columns())
+	row := d.DataBaseConnection.QueryRow(query).Scan(&model)
+	fmt.Println(row)
 	if err != nil {
 		return err
 	}
