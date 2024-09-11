@@ -19,7 +19,7 @@ func (d *Database) buildModel(row *sql.Rows, model interface{}) (err error) {
 	fieldAddresses := make([]uintptr, len(columns))
 
 	// loop over the fields of the model
-	t := reflect.TypeOf(model)
+	t := reflect.TypeOf(&model)
 	for i := 0; i < t.NumField(); i++ {
 		field := t.Field(i)
 		modelValue := field.Tag.Get("model")
