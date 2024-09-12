@@ -1,36 +1,26 @@
 package database
 
-import (
-	"database/sql"
-	"reflect"
+import "fmt"
+
+const (
+	QueryError = "RawQueryError: %v"
 )
 
+// RawQuery
+// This method uses the string to query the database and attempt to put the result into the model.
+// This method has no checking on the incoming query string so the caller is responsible for checking the
+// query for correctness and for security.
 func (d *Database) RawQuery(query string, model interface{}) (err error) {
+
 	row, err := d.DataBaseConnection.Query(query)
-	err = d.buildModel(row, model)
-	return
-}
-
-func (d *Database) buildModel(row *sql.Rows, model interface{}) (err error) {
-
-	// Get list of column names
-	columns, err := row.Columns()
-
-	fieldAddresses := make([]uintptr, len(columns))
-
-	// loop over the fields of the model
-	t := reflect.TypeOf(&model)
-	for i := 0; i < t.NumField(); i++ {
-		field := t.Field(i)
-		modelValue := field.Tag.Get("model")
-		for _, column := range columns {
-			if column == modelValue {
-				fieldAddresses = append(fieldAddresses, field.Offset)
-			}
-		}
+	if err != nil {
+		return fmt.Errorf(QueryError, err)
 	}
-	// scan model tags into struct
-	err = row.Scan(fieldAddresses)
+
+	err = d.buildModel(row, model)
+	if err != nil {
+		return fmt.Errorf(QueryError, err)
+	}
 
 	return
 }

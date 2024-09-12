@@ -3,6 +3,8 @@ DjanGopher
 
 [![Go](https://github.com/dowling-john/DjanGopher/actions/workflows/unit-testing.yaml/badge.svg)](https://github.com/dowling-john/DjanGopher/actions/workflows/unit-testing.yaml)
 [![DjanGopher Test Coverage](https://github.com/dowling-john/DjanGopher/actions/workflows/testing-coverage.yaml/badge.svg)](https://github.com/dowling-john/DjanGopher/actions/workflows/testing-coverage.yaml)
+[![MIT license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
+[![Go Report Card](https://goreportcard.com/badge/github.com/dowling-john/DjanGopher)](https://goreportcard.com/report/github.com/dowling-john/DjanGopher)
 
 *This Project is still experimental*
 -------
