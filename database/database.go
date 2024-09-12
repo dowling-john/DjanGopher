@@ -6,8 +6,16 @@ import (
 	"github.com/dowling-john/DjanGopher/errors"
 )
 
-func InitDatabase(databaseConfiguration config.DatabaseConfig) *sql.DB {
-	databaseConnection, err := sql.Open("", databaseConfiguration.FormatDsn())
+// Database
+// Todo: need to add the logger to the database
+type Database struct {
+	DataBaseConnection *sql.DB
+}
+
+func InitDatabase(databaseConfiguration config.DatabaseConfig) *Database {
+	databaseConnection, err := sql.Open(databaseConfiguration.DriverName, databaseConfiguration.DatabaseName)
 	errors.LogAnyErrorAndExit(err)
-	return databaseConnection
+	return &Database{
+		DataBaseConnection: databaseConnection,
+	}
 }

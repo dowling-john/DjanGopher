@@ -3,6 +3,7 @@ package main
 import (
 	"embed"
 	"flag"
+	_ "github.com/mattn/go-sqlite3"
 	"io/fs"
 	"os"
 	"text/template"
