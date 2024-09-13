@@ -2,9 +2,7 @@ package main
 
 import (
 	"embed"
-	"fmt"
-	"github.com/dowling-john/DjanGopher/config"
-	"github.com/dowling-john/DjanGopher/database"
+	"flag"
 	_ "github.com/mattn/go-sqlite3"
 	"io/fs"
 	"os"
@@ -43,30 +41,6 @@ func CreateApp(s string) error {
 }
 
 func main() {
-	//flag.Func("create-app", "DjanGopher Manage", CreateApp)
-	//flag.Parse()
-
-	type NewTable struct {
-		ID      int `model:"id"`
-		Testing int `model:"testing"`
-	}
-
-	type TestingTable struct {
-		ID         int    `model:"id"`
-		TestColumn string `model:"test_column"`
-	}
-
-	db := database.InitDatabase(
-		config.DatabaseConfig{
-			DatabaseName: "./foo.db",
-			DriverName:   "sqlite3",
-		},
-	)
-
-	err := db.InsertOne(&TestingTable{
-		ID:         256,
-		TestColumn: "Testing the new column",
-	})
-	fmt.Println(err)
-
+	flag.Func("create-app", "DjanGopher Manage", CreateApp)
+	flag.Parse()
 }
