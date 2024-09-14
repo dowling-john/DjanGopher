@@ -21,7 +21,6 @@ func (router *Router) WriteErrorIfRequired(w http.ResponseWriter, err error) boo
 // ServeHTTP
 // Main routing function, this function handles all the incoming http requests and distributes them to the relevant
 // handlers
-// ToDo: This needs a little clean up I think that an error handler might be in order
 func (router *Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	request := router.buildRequest(r)
 	httpResponse := router.runHttpMethodOfSelectedHandler(request, router.selectHandler(request))
@@ -31,8 +30,7 @@ func (router *Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	b, err := io.ReadAll(httpResponse.Body)
 	fmt.Println("after the body")
 	if !router.WriteErrorIfRequired(w, err) {
-		_, err := w.Write(b)
+		_, _ = w.Write(b)
 		fmt.Println("after the write")
-		router.WriteErrorIfRequired(w, err)
 	}
 }
