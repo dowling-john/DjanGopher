@@ -12,7 +12,6 @@ import (
 func (router *Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	request := router.buildRequest(r)
 	httpResponse := router.runHttpMethodOfSelectedHandler(request, router.selectHandler(request))
-	w.WriteHeader(httpResponse.StatusCode)
 	if _, err := io.Copy(w, httpResponse.Body); err != nil {
 		log.Printf("Failed to write response: %v", err)
 	}
