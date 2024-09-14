@@ -1,6 +1,7 @@
 package routing
 
 import (
+	"fmt"
 	"io"
 	"net/http"
 )
@@ -26,9 +27,12 @@ func (router *Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	httpResponse := router.runHttpMethodOfSelectedHandler(request, router.selectHandler(request))
 
 	w.WriteHeader(httpResponse.StatusCode)
+	fmt.Println("after the header")
 	b, err := io.ReadAll(httpResponse.Body)
+	fmt.Println("after the body")
 	if !router.WriteErrorIfRequired(w, err) {
 		_, err := w.Write(b)
+		fmt.Println("after the write")
 		router.WriteErrorIfRequired(w, err)
 	}
 }
