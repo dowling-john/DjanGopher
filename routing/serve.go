@@ -1,6 +1,8 @@
 package routing
 
 import (
+	"io"
+	"log"
 	"net/http"
 )
 
@@ -10,7 +12,8 @@ import (
 func (router *Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	request := router.buildRequest(r)
 	httpResponse := router.runHttpMethodOfSelectedHandler(request, router.selectHandler(request))
-
-	_ = httpResponse.Write(w)
-
+	w.WriteHeader(http.StatusOK)
+	if _, err := io.Copy(w, httpResponse.Body); err != nil {
+		log.Printf("Failed to write response: %v", err)
+	}
 }
