@@ -8,7 +8,9 @@ import (
 
 type (
 	// Router
-	// The Router
+	// The Router handles takes the incoming requests and maps them to defines handlers in the
+	// Routes field, The router also includes a place to defines custom error and not found handlers.
+	// the package includes some default ones that you can include should you want to use them.
 	Router struct {
 		DatabaseConnection         *database.Database
 		Logger                     *slog.Logger
