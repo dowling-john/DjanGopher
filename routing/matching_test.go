@@ -76,3 +76,35 @@ func TestRouterUsesNotFoundHandlerWhenNoRoutesInRouter(t *testing.T) {
 	assert.NotNil(t, handler)
 	assert.IsType(t, &handlers.NotFoundHandler{}, handler)
 }
+
+// TestRouterUsesNotFoundHandlerWhenNoMatchingRoutesInRouter
+// Ensure that the router uses the handler in the NotFoundHandlerVariable if there are no
+// matching routes in the Routes variable.This assumes that the not found handler has been configured.
+func TestRouterUsesNotFoundHandlerWhenNoMatchingRoutesInRouter(t *testing.T) {
+
+	router := &Router{
+		Routes: []*Route{
+			{
+				Path:    "/test_path",
+				Handler: &TestHandler{},
+			},
+		},
+		Logger:          slog.New(slog.NewTextHandler(os.Stdout, nil)),
+		NotFoundHandler: &handlers.NotFoundHandler{},
+	}
+
+	handler := router.selectHandler(
+		&http.Request{
+			BaseHttpRequest: &http2.Request{
+				Method: "GET",
+				URL: &url.URL{
+					Path: "/not_found_path",
+				},
+			},
+			Logger: slog.New(slog.NewTextHandler(os.Stdout, nil)),
+		},
+	)
+
+	assert.NotNil(t, handler)
+	assert.IsType(t, &handlers.NotFoundHandler{}, handler)
+}
