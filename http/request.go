@@ -3,7 +3,7 @@ package http
 import (
 	"github.com/dowling-john/DjanGopher/config"
 	"github.com/dowling-john/DjanGopher/database"
-	"log"
+	"log/slog"
 	"net/http"
 )
 
@@ -13,6 +13,6 @@ import (
 type Request struct {
 	Configuration      *config.Configuration
 	DataBaseConnection *database.Database
-	Logger             *log.Logger
+	Logger             *slog.Logger
 	BaseHttpRequest    *http.Request
 }
