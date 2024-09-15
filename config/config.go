@@ -1,5 +1,15 @@
 package config
 
+import (
+	"fmt"
+	"os"
+)
+
+const (
+	DefaultConfigurationLocation = "./config.yaml"
+	CouldNotOpenFile             = "Could not open config file"
+)
+
 type (
 	DatabaseConfig struct {
 		Host         string `yaml:"Host"`
@@ -30,10 +40,14 @@ type (
 )
 
 func InitConfiguration() (configuration *Configuration) {
-
 	// ToDo: This function needs to have more configuration checking.
-
+	file, err := os.Open(DefaultConfigurationLocation)
+	if err != nil {
+		_ = fmt.Errorf(CouldNotOpenFile)
+	}
 	configuration = &Configuration{}
-	configuration.LoadConfiguration()
+	if err := configuration.LoadConfiguration(file); err != nil {
+		_ = fmt.Errorf(CouldNotOpenFile)
+	}
 	return
 }
