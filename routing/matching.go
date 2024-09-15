@@ -1,6 +1,7 @@
 package routing
 
 import (
+	"fmt"
 	"github.com/dowling-john/DjanGopher/handlers"
 	"github.com/dowling-john/DjanGopher/http"
 	http2 "net/http"
@@ -8,27 +9,38 @@ import (
 )
 
 func (router *Router) selectHandler(request *http.Request) (selectedHandler handlers.Handler) {
+	fmt.Println(request.BaseHttpRequest.URL.Path)
 	for _, route := range router.Routes {
 		if regexp.MustCompile(route.Path).MatchString(request.BaseHttpRequest.URL.Path) {
+			fmt.Println("match", route.Path)
 			return route.Handler
 		}
 	}
+	fmt.Println("match NotFound")
 	return router.NotFoundHandler
 }
 
+// ToDo: need to ensure that the incoming handler is not a nil value
 func (router *Router) runHttpMethodOfSelectedHandler(request *http.Request, selectedHandler handlers.Handler) (response *http2.Response) {
-	switch request.BaseHttpRequest.Method {
-	case http2.MethodGet:
-		return selectedHandler.Get(request)
-	case http2.MethodPost:
-		return selectedHandler.Post(request)
-	case http2.MethodPut:
-		return selectedHandler.Put(request)
-	case http2.MethodPatch:
-		return selectedHandler.Patch(request)
-	case http2.MethodDelete:
-		return selectedHandler.Delete(request)
-	default:
-		return selectedHandler.Get(request)
+	if selectedHandler != nil {
+		switch request.BaseHttpRequest.Method {
+		case http2.MethodGet:
+			return selectedHandler.Get(request)
+		case http2.MethodPost:
+			return selectedHandler.Post(request)
+		case http2.MethodPut:
+			return selectedHandler.Put(request)
+		case http2.MethodPatch:
+			return selectedHandler.Patch(request)
+		case http2.MethodDelete:
+			return selectedHandler.Delete(request)
+		default:
+			return selectedHandler.Get(request)
+		}
 	}
+	if router.InternalServerErrorHandler != nil {
+		return router.InternalServerErrorHandler.Get(request)
+	}
+	errorHandler := &handlers.InternalServerError{}
+	return errorHandler.Get(request)
 }
