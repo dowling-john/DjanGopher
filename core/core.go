@@ -6,16 +6,21 @@ import (
 	"github.com/dowling-john/DjanGopher/database"
 	"github.com/dowling-john/DjanGopher/logging"
 	"github.com/dowling-john/DjanGopher/routing"
-	"log"
+	"log/slog"
 	"net/http"
 )
 
 type DjanGopher struct {
 	Configuration      *config.Configuration
 	DatabaseConnection *database.Database
-	Logger             *log.Logger
+	Logger             *slog.Logger
 	Router             *routing.Router
 }
+
+const (
+	ErrorStartingServerLogging = "error starting server with error: %v"
+	InitialiseDatabaseLogging  = "initialising the database"
+)
 
 // RunServer
 // This is the entry point to the application
@@ -33,10 +38,11 @@ func (d *DjanGopher) RunServer() {
 	d.Logger = logging.Init(d.Configuration.LoggingConfiguration)
 	d.Router.Logger = d.Logger
 
+	d.Logger.Debug(InitialiseDatabaseLogging)
 	d.DatabaseConnection = database.InitDatabase(d.Configuration.DatabaseConfiguration)
 	d.Router.DatabaseConnection = d.DatabaseConnection
 
-	d.Logger.Fatal(
-		http.ListenAndServe(fmt.Sprintf(":%v", d.Configuration.ServerConfiguration.Port), d.Router),
-	)
+	if err := http.ListenAndServe(fmt.Sprintf(":%v", d.Configuration.ServerConfiguration.Port), d.Router); err != nil {
+		d.Logger.Error(fmt.Sprintf(ErrorStartingServerLogging, err))
+	}
 }

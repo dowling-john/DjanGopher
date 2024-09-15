@@ -3,7 +3,7 @@ package routing
 import (
 	"github.com/dowling-john/DjanGopher/database"
 	"github.com/dowling-john/DjanGopher/handlers"
-	"log"
+	"log/slog"
 )
 
 type (
@@ -11,7 +11,7 @@ type (
 	// The Router
 	Router struct {
 		DatabaseConnection         *database.Database
-		Logger                     *log.Logger
+		Logger                     *slog.Logger
 		Routes                     []*Route
 		InternalServerErrorHandler handlers.Handler
 		NotFoundHandler            handlers.Handler
