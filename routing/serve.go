@@ -1,10 +1,15 @@
 package routing
 
 import (
+	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"strings"
+)
+
+const (
+	IoCopyError = "error copying io to http writer: %v"
+	NilHttpBody = "http body is nil"
 )
 
 // ServeHTTP
@@ -15,10 +20,11 @@ func (router *Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	httpResponse := router.runHttpMethodOfSelectedHandler(request, router.selectHandler(request))
 
 	if httpResponse.Body == nil {
+		router.Logger.Error(NilHttpBody)
 		httpResponse.Body = io.NopCloser(strings.NewReader(""))
 	}
 
 	if _, err := io.Copy(w, httpResponse.Body); err != nil {
-		log.Printf("Failed to write response: %v", err)
+		router.Logger.Error(fmt.Sprintf(IoCopyError, err))
 	}
 }
