@@ -2,28 +2,39 @@ package logging
 
 import (
 	"github.com/dowling-john/DjanGopher/config"
+	"io"
 	"log"
+	"log/slog"
 	"os"
 )
 
-func createFileLogger(fileName string) *log.Logger {
-	f, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
-	if err != nil {
-		log.Fatalf("error opening file: %v", err)
+// getHandlerType
+func getHandlerType(configuration config.LoggingConfiguration, writer io.Writer) (handler slog.Handler) {
+	switch configuration.HandlerType {
+	case "json":
+		return slog.NewJSONHandler(writer, nil)
+	default:
+		return slog.NewTextHandler(writer, nil)
 	}
-	defer f.Close()
-	return log.New(f, "", log.Ldate|log.Ltime)
+}
+
+func getWriter(configuration config.LoggingConfiguration) (writer io.Writer) {
+	switch configuration.WriterType {
+	case "file":
+		file, err := os.OpenFile(configuration.FileName, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+		if err != nil {
+			log.Fatal(err)
+		}
+		return file
+	default:
+		return os.Stdout
+	}
 }
 
 // Init
 // Initialize logging from configuration file
-func Init(configuration config.LoggingConfiguration) *log.Logger {
-	switch configuration.WriterType {
-	case "console":
-		return log.New(os.Stdout, "", log.Ldate|log.Ltime)
-	case "file":
-		return createFileLogger(configuration.FileName)
-	default:
-		return log.New(os.Stderr, "", log.Ldate|log.Ltime)
-	}
+func Init(configuration config.LoggingConfiguration) (logger *slog.Logger) {
+	return slog.New(
+		getHandlerType(configuration, getWriter(configuration)),
+	)
 }

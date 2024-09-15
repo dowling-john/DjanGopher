@@ -11,9 +11,10 @@ type (
 	}
 
 	LoggingConfiguration struct {
-		WriterType string `yaml:"WriterType"`
-		Level      string `yaml:"Level"`
-		FileName   string `yaml:"FileName,omitempty"`
+		HandlerType string `yaml:"HandlerType"`
+		WriterType  string `yaml:"WriterType"`
+		Level       string `yaml:"Level"`
+		FileName    string `yaml:"FileName,omitempty"`
 	}
 
 	ServerConfig struct {
