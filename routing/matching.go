@@ -16,6 +16,8 @@ const (
 	UnknownHttpMethod           = "unknown http method: %v"
 )
 
+// selectHandler
+// Select the correct handler based on a regex match of the incoming http request path, the first match is returned
 func (router *Router) selectHandler(request *http.Request) (selectedHandler handlers.Handler) {
 	router.Logger.Debug(fmt.Sprintf(IncomingRequestLogging, request.BaseHttpRequest.URL.Path))
 	for _, route := range router.Routes {
