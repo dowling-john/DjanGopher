@@ -3,8 +3,6 @@ package database
 import "fmt"
 
 const (
-	InsertQuery = `INSERT INTO %v (%v) VALUES (%v)`
-
 	QueryError = "RawQueryError: %v"
 )
 

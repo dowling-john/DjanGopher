@@ -3,13 +3,13 @@ package database
 import "fmt"
 
 const (
-	InsertQuery = `INSERT INTO %v (%v) VALUES (%v)`
+	UpsertQuery = `INSERT INTO %v (%v) VALUES (%v) ON CONFLICT DO UPDATE;`
 )
 
-// InsertOne
+// UpsertOne
 // Insert a single model into the database
-// This method will error if there is already a record in the DB
-func (d *Database) InsertOne(model interface{}) (err error) {
+// This method will update if there is already a record in the DB
+func (d *Database) UpsertOne(model interface{}) (err error) {
 	columns, values, err := d.getModelInsertQueryString(model)
 	if err != nil {
 		fmt.Println(err)

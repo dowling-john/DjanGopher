@@ -26,6 +26,10 @@ Philosophy of the project
     - Ease of Use
         - Code readabillity over fancy functionality
 
+    - Simplistic unit testing
+        - Each test should be independant of one another
+        - No looping through test cases (Each Test should be clear in what it is testing, if it deserves a test then write one)
+        - A Test should contain everything it needs to run (no setup functions)
 
 Initial MVP Objectives
 -----
