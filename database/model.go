@@ -69,6 +69,7 @@ func (d *Database) getModelName(model interface{}) (modelName string) {
 	if modelValue.Kind() == reflect.Ptr {
 		modelValue = modelValue.Elem()
 	}
+	fmt.Println(modelValue.Type().String())
 	name := strings.Split(".", modelValue.Type().String())
 	fmt.Println(name)
 	return name[len(name)-1]
