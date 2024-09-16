@@ -70,6 +70,7 @@ func (d *Database) getModelName(model interface{}) (modelName string) {
 		modelValue = modelValue.Elem()
 	}
 	name := strings.Split(".", modelValue.Type().String())
+	fmt.Println(name)
 	return name[len(name)-1]
 }
 
