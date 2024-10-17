@@ -41,4 +41,6 @@ Tools
     - Migrations tooling the same as Django <- Go install 
     - Creating Projects 
 
-    
+Examples
+--------
+You can find example projects in the examples folder, eventually these will be replaced by a cli tool that will create a base project for you
